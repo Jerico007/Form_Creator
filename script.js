@@ -124,6 +124,8 @@ function saveFormData() {
 
     // Stringifying JSON data
     console.log(JSON.stringify(data, null, 4));
+
+    alert('JSON data has been logged successfully');
   }
 }
 
