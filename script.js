@@ -10,7 +10,7 @@
 </div>; */
 }
 
-let dragId = "";
+
 
 let id = generateUUID();
 
@@ -137,22 +137,21 @@ function allowDrop(e) {
 // Function to handle drop event when item has been dropped
 function handleOnDrop(e) {
   e.preventDefault();
-
+  let dragId = e.dataTransfer.getData("dragId");
   if (
     e.target.parentElement.parentElement.hasAttribute("id") &&
-    e.target.parentElement.parentElement.id !== dragId
+    e.target.parentElement.parentElement.id !== dragId && e.target.parentElement.parentElement.id !== 'main-form'
   ) {
     const parent = e.target.parentElement.parentElement;
-
+   
     const element = document.getElementById(dragId);
     
     parent.insertAdjacentElement("beforebegin", element);
-    dragId = "";
   }
   return;
 }
 
 // Function to handle drag event when item has been dragged
 function handleDragStart(e) {
-  dragId = e.target.id;
+  e.dataTransfer.setData("dragId",e.target.id);
 }
