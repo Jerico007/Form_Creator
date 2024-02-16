@@ -10,8 +10,6 @@
 </div>; */
 }
 
-
-
 let id = generateUUID();
 
 // main form body
@@ -137,15 +135,37 @@ function allowDrop(e) {
 // Function to handle drop event when item has been dropped
 function handleOnDrop(e) {
   e.preventDefault();
+  console.log(e.target);
   let dragId = e.dataTransfer.getData("dragId");
   if (
     e.target.parentElement.parentElement.hasAttribute("id") &&
-    e.target.parentElement.parentElement.id !== dragId && e.target.parentElement.parentElement.id !== 'main-form'
+    e.target.parentElement.parentElement.id !== dragId &&
+    e.target.parentElement.parentElement.id !== "main-form"
   ) {
     const parent = e.target.parentElement.parentElement;
-   
+
     const element = document.getElementById(dragId);
-    
+
+    parent.insertAdjacentElement("beforebegin", element);
+  } else if (
+    e.target.parentElement.hasAttribute("id") &&
+    e.target.parentElement.id !== dragId &&
+    e.target.parentElement.id !== "main-form"
+  ) {
+    const parent = e.target.parentElement;
+
+    const element = document.getElementById(dragId);
+
+    parent.insertAdjacentElement("beforebegin", element);
+  } else if (
+    e.target.hasAttribute("id") &&
+    e.target.id !== dragId &&
+    e.target.id !== "main-form"
+  ) {
+    const parent = e.target;
+
+    const element = document.getElementById(dragId);
+
     parent.insertAdjacentElement("beforebegin", element);
   }
   return;
@@ -153,5 +173,5 @@ function handleOnDrop(e) {
 
 // Function to handle drag event when item has been dragged
 function handleDragStart(e) {
-  e.dataTransfer.setData("dragId",e.target.id);
+  e.dataTransfer.setData("dragId", e.target.id);
 }
