@@ -135,7 +135,7 @@ function allowDrop(e) {
 // Function to handle drop event when item has been dropped
 function handleOnDrop(e) {
   e.preventDefault();
-  console.log(e.target);
+ 
   let dragId = e.dataTransfer.getData("dragId");
   if (
     e.target.parentElement.parentElement.hasAttribute("id") &&
