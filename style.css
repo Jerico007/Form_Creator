@@ -141,11 +141,22 @@ select {
   }
 
   #main-form {
-    background-color: whitesmoke;
+    
     height: 100vw;
     width: 49vw;
-    overflow-y: auto;
-    border-radius: 5px;
-    transition: all 1s ease-in-out;
+ 
+  }
 }
+
+/* 4k display responsiveness */
+@media screen and (max-width: 1440px) {
+  .form-holder-container {
+    height: 90vh;
+  }
+  #main-form {
+    
+    height:36vw;
+    width: 44vw;
+ 
+  }
 }
