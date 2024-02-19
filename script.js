@@ -36,10 +36,7 @@ TextArea.onclick = (e) => {
 
 Save.onclick = saveFormData;
 
-// Mainform drag events
-// mainForm.ondragover = allowDrop;
 
-// mainForm.ondrop = handleOnDrop
 
 // function to generate UUID
 function generateUUID() {
