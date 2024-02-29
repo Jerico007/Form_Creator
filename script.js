@@ -66,9 +66,7 @@ function addInputs(type) {
   componentHolder.id = id;
   componentHolder.draggable = true;
   componentHolder.ondragstart = handleDragStart;
-  componentHolder.ontouchstart = handleDragStart
   componentHolder.ondragend = handleDragEnd;
-  componentHolder.ontouchend = handleDragEnd;
   // componentHolder.ondrop = handleOnDrop;
   componentHolder.innerHTML = `<div class="heading">
    <p class="label">Sample Label</p>
