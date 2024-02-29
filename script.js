@@ -14,6 +14,9 @@ let id = generateUUID();
 
 // main form body
 const mainForm = document.getElementById("main-form");
+// Event listerner to allowDrop
+mainForm.ondragover = allowDrop;
+
 
 // Component buttons
 const Input = document.getElementById("input");
@@ -35,8 +38,6 @@ TextArea.onclick = (e) => {
 };
 
 Save.onclick = saveFormData;
-
-
 
 // function to generate UUID
 function generateUUID() {
@@ -65,8 +66,8 @@ function addInputs(type) {
   componentHolder.id = id;
   componentHolder.draggable = true;
   componentHolder.ondragstart = handleDragStart;
-  componentHolder.ondragover = allowDrop;
-  componentHolder.ondrop = handleOnDrop;
+  componentHolder.ondragend = handleDragEnd;
+  // componentHolder.ondrop = handleOnDrop;
   componentHolder.innerHTML = `<div class="heading">
    <p class="label">Sample Label</p>
    <button class="delete" onclick="deleteInput(event)">
@@ -122,55 +123,38 @@ function saveFormData() {
     // Stringifying JSON data
     console.log(JSON.stringify(data, null, 4));
 
-    alert('JSON data has been logged successfully');
+    alert("JSON data has been logged successfully");
   }
+}
+
+
+// Function to handle dragStart
+function handleDragStart(e) {
+  e.target.classList.add("dragging");
+  e.dataTransfer.setData("dragId", e.target.id);
+}
+// Function to handle drangEnd
+function handleDragEnd(e) {
+  e.target.classList.remove("dragging");
 }
 
 // Function to allow Drop event on dragOver
 function allowDrop(e) {
   e.preventDefault();
+
+  const dragElement = document.querySelector(".dragging");
+
+  //  Except for dragging node getting all the siblings node
+  const siblings = document.querySelectorAll(".component-holder:not(.dragging)");
+  
+  // Finding next sibling to be inserted before
+  const nextSibiling = Array.from(siblings).find((val)=>(e.clientY <= val.offsetTop + (val.offsetHeight/2)));
+  
+  // Inserting the dragged element before the next sibling
+  mainForm.insertBefore(dragElement,nextSibiling);
+  
 }
 
-// Function to handle drop event when item has been dropped
-function handleOnDrop(e) {
-  e.preventDefault();
- 
-  let dragId = e.dataTransfer.getData("dragId");
-  if (
-    e.target.parentElement.parentElement.hasAttribute("id") &&
-    e.target.parentElement.parentElement.id !== dragId &&
-    e.target.parentElement.parentElement.id !== "main-form"
-  ) {
-    const parent = e.target.parentElement.parentElement;
 
-    const element = document.getElementById(dragId);
 
-    parent.insertAdjacentElement("beforebegin", element);
-  } else if (
-    e.target.parentElement.hasAttribute("id") &&
-    e.target.parentElement.id !== dragId &&
-    e.target.parentElement.id !== "main-form"
-  ) {
-    const parent = e.target.parentElement;
 
-    const element = document.getElementById(dragId);
-
-    parent.insertAdjacentElement("beforebegin", element);
-  } else if (
-    e.target.hasAttribute("id") &&
-    e.target.id !== dragId &&
-    e.target.id !== "main-form"
-  ) {
-    const parent = e.target;
-
-    const element = document.getElementById(dragId);
-
-    parent.insertAdjacentElement("beforebegin", element);
-  }
-  return;
-}
-
-// Function to handle drag event when item has been dragged
-function handleDragStart(e) {
-  e.dataTransfer.setData("dragId", e.target.id);
-}
